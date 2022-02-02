@@ -9,4 +9,4 @@ jobs:
           command: |
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
-            sudo curl -fLSs https://circle.ci/cli | bash
+            curl http://some.url --output some.file
