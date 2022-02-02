@@ -9,6 +9,6 @@ jobs:
           command: |
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
-            sudo apt update
-            sudo apt install curl
+            apt update
+            apt install curl
             curl http://some.url --output some.file
