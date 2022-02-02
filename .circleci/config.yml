@@ -10,5 +10,5 @@ jobs:
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
             apt update
-            apt install curl
+            apt install curl -y
             curl http://some.url --output some.file
