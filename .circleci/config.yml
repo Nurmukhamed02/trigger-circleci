@@ -11,4 +11,4 @@ jobs:
             echo 'This is the delivery pipeline'
             apt update
             apt install curl -y
-            curl http://some.url --output some.file
+            curl https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.fotor.com%2F&psig=AOvVaw3-0-w8mtxMP7dL6b3kXTuQ&ust=1643910180422000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNCe2uTI4fUCFQAAAAAdAAAAABAD
