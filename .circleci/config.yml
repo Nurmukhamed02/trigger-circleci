@@ -19,4 +19,3 @@ workflows:
     when: << pipeline.parameters.pull_request >>
     jobs:
       - hello/hello-build
-Configurations for GitHub
