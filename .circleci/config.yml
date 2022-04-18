@@ -1,21 +1,22 @@
 version: 2.1
-
-parameters:
-  pull_request:
-    type: boolean
-    default: true
-
-orbs:
-  welcome: circleci/welcome-orb@0.4.1
-  hello: circleci/hello-build@0.0.5
-
+jobs:
+  build:
+    steps:
+      - run: echo 'hello'
+  test:
+    steps:
+      - run:  echo 'testing...'
+      - run:
+          name: Check for PR or master
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ]; then
+              if [ "$CIRCLE_BRANCH" != "main" ]; then
+                echo "Not a PR or master, halting"
+                circleci step halt
+              fi
+            fi
 workflows:
-  push:
-    unless: << pipeline.parameters.pull_request >>
+  build-test:
     jobs:
-      - welcome/run
-
-  pull_request:
-    when: << pipeline.parameters.pull_request >>
-    jobs:
-      - hello/hello-build
+      - build
+      - test
