@@ -1,20 +1,18 @@
 setup: true
 version: 2.1
-orbs:
-  continuation: circleci/continuation@0.2.0
-workflows:
-  setup:
-    jobs:
-      - continuation/continue:
-          configuration_path: ".circleci/main.yml"
-          parameters: /home/circleci/params.json
-          pre-steps:
-            - run:
-                command: |
-                  if [ -z "${CIRCLE_PULL_REQUEST##*/}" ]
-                  then
-                    IS_PR=false
-                  else
-                    IS_PR=true
-                  fi
-                  echo '{ "is_pr": '$IS_PR' }' >> /home/circleci/params.json
+jobs:
+  build:
+    steps:
+      - run: echo hello
+  test:
+    steps:
+      - run:  echo testing...
+      - run:
+          name: Check for PR or master
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ]; then
+              if [ "$CIRCLE_BRANCH" != "master" ]; then
+                echo "Not a PR or master, halting"
+                circleci step halt
+              fi
+            fi
