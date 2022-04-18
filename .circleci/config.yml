@@ -18,3 +18,9 @@ workflows:
                     IS_PR=true
                   fi
                   echo '{ "is_pr": '$IS_PR' }' >> /home/circleci/params.json
+      - test
+          - run:
+              command:
+                - echo 'hello world'
+      
+     
