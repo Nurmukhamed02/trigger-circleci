@@ -3,16 +3,21 @@ version: 2.1
 jobs:
   build:
     steps:
-      - run: echo hello
+      - run: echo 'hello'
   test:
     steps:
-      - run:  echo testing...
+      - run:  echo 'testing...'
       - run:
           name: Check for PR or master
           command: |
             if [ -z "$CIRCLE_PULL_REQUEST" ]; then
-              if [ "$CIRCLE_BRANCH" != "master" ]; then
+              if [ "$CIRCLE_BRANCH" != "main" ]; then
                 echo "Not a PR or master, halting"
                 circleci step halt
               fi
             fi
+workflows:
+  build-test:
+    jobs:
+      - build
+      - test
