@@ -2,11 +2,6 @@ version: 2.1
 
 executors:
   node-docker: # declares a reusable executor
-    parameters:
-      version:
-        description: "version tag"
-        default: "lts"
-        type: string
     docker:
       - image: cimg/node
 
