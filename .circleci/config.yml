@@ -1,18 +1,20 @@
 version: 2.1
+
 commands:
-  copy-markdown:
+  list-files:
     parameters:
-      destination:
-        description: destination directory
-        type: string
-        default: docs
+      os:
+        type: enum
+        default: "windows" #invalid declaration of default that does not appear in the comma-separated enum list
+        enum: ["darwin", "linux"]
+
 jobs:
   parameter_test:
     steps:
-      - run: echo  << parameters.destination >>
+      - run: echo  << parameters.os >>
 workflows:
   version: 2
   build-test-adhoc:
     jobs:
-      parameter_test
+      - parameter_test
     
