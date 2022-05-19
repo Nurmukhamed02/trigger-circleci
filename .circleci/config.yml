@@ -14,26 +14,24 @@ executors:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
 
 jobs:
-  test:
+  test1:
     parameters:
-      version:
-        description: "version tag"
-        default: "lts"
+      lane:
+        description: "LANE"
+        default: "test"
         type: string
     executor:
       name: node-docker
-      version: <<parameters.version>>
+      version: <<parameters.lane>>
     steps:
       - checkout
-      - run: echo "how are ya?"
-
+      - run: echo <<parameters.lane>>
+      
 workflows:
   matrix-tests:
     jobs:
-      - test:
-          matrix:
-            parameters:
-              version:
-                - 13.11.0
-                - 12.16.0
-                - 10.19.0
+      - test1
+#           matrix:
+#             parameters:
+#               lane:
+#                 - test
