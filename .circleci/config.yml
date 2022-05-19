@@ -6,29 +6,25 @@ executors:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-parameters:
+
+commands:
+  list-files:
+    parameters:
       os:
         default: "linux"
         description: The target Operating System for the heroku binary. Must be one of "linux", "darwin", "win32".
         type: enum
-        enum: ["linux", "darwin", "win32"]  
-
-# commands:
-#   list-files:
-#     parameters:
-#       os:
-#         default: "linux"
-#         description: The target Operating System for the heroku binary. Must be one of "linux", "darwin", "win32".
-#         type: enum
-#         enum: ["linux", "darwin", "win32"]
-#     steps:
-#       - run: echo  << parameters.os >>
+        enum: ["linux", "darwin", "win32"]
+    steps:
+      - run: echo  << parameters.os >>
 
 jobs:
   my-job:
     executor: my-executor
     steps:
-      - run: echo < parameters.os >>
+      - run:
+          command: |
+            echo < parameters.os >>
  
 workflows:
   my-workflow:
