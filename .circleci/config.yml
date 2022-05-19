@@ -1,25 +1,20 @@
 version: 2.1
+
 commands:
-  print:
+  list-files:
     parameters:
-      message:
-        type: string
-    steps:
-      - run: echo << parameters.message >>
+      os:
+        default: "linux"
+        description: The target Operating System for the heroku binary. Must be one of "linux", "darwin", "win32".
+        type: enum
+        enum: ["linux", "darwin", "win32"]
 
 jobs:
-  cat-file:
-    parameters:
-      file:
-        type: string
-    steps: |
-    
-      - print:
-          message: Printing << parameters.file >>
-      - run: cat << parameters.file >>
-
+  test:
+    steps:
+      - run: echo  << pipeline.parameters.os >>
+  
 workflows:
   my-workflow:
     jobs:
-      - cat-file:
-          file: test.txt
+      - test
