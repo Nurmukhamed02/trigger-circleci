@@ -1,32 +1,39 @@
 version: 2.1
+
 executors:
-  my-executor:
+  node-docker: # declares a reusable executor
+    parameters:
+      version:
+        description: "version tag"
+        default: "lts"
+        type: string
     docker:
-      - image: cimg/ruby:3.0.3-browsers
+      - image: cimg/node:<<parameters.version>>
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
 
-commands:
-  list-files:
-    parameters:
-      os:
-        default: "linux"
-        description: The target Operating System for the heroku binary. Must be one of "linux", "darwin", "win32".
-        type: enum
-        enum: ["linux", "darwin", "win32"]
-    steps:
-      - run: echo  << parameters.os >>
-
 jobs:
-  my-job:
-    executor: my-executor
+  test:
+    parameters:
+      version:
+        description: "version tag"
+        default: "lts"
+        type: string
+    executor:
+      name: node-docker
+      version: <<parameters.version>>
     steps:
-      - run:
-          command: |
-            echo < parameters.os >>
- 
+      - checkout
+      - run: echo "how are ya?"
+
 workflows:
-  my-workflow:
+  matrix-tests:
     jobs:
-      - my-job
+      - test:
+          matrix:
+            parameters:
+              version:
+                - 13.11.0
+                - 12.16.0
+                - 10.19.0
