@@ -1,20 +1,23 @@
 version: 2.1
-
-commands:
-  list-files:
+commands: # a reusable command with parameters
+  greeting:
     parameters:
-      os:
-        type: enum
-        default: "windows" #invalid declaration of default that does not appear in the comma-separated enum list
-        enum: ["darwin", "linux"]
-
-jobs:
-  parameter_test:
+      to:
+        default: "world"
+        type: string
     steps:
-      - run: echo  << parameters.os >>
+      - run: echo "Hello <<parameters.to>>"
+jobs:
+  my-job:
+    docker:
+      - image: cimg/base:stable
+         # context / project UI env-var reference
+    steps:
+      - greeting:
+          to: "My-Name"
 workflows:
-  version: 2
-  build-test-adhoc:
+  my-workflow:
     jobs:
-      - parameter_test
-    
+      - my-job
+
+
