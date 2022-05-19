@@ -16,13 +16,13 @@ commands:
         type: enum
         enum: ["linux", "darwin", "win32"]
     steps:
-      - run: echo  << pipeline.parameters.os >>
+      - run: echo  << parameters.os >>
 
 jobs:
   my-job:
     executor: my-executor
     steps:
-      - run: echo outside the executor
+      - run: echo < parameters.os >>
  
 workflows:
   my-workflow:
