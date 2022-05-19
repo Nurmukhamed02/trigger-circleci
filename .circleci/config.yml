@@ -1,25 +1,25 @@
 version: 2.1
-commands: # a reusable command with parameters
-  greeting:
+
+commands:
+  print:
     parameters:
-      to:
-        default: "world"
+      message:
         type: string
     steps:
-      - run: echo "Hello <<parameters.to>>"
+      - run: echo << parameters.message >>
+
 jobs:
-  my-job:
-    docker:
-      - image: cimg/base:stable
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  cat-file:
+    parameters:
+      file:
+        type: string
     steps:
-      - greeting:
-          to: "My-Name"
+      - print:
+          message: Printing << parameters.file >>
+      - run: cat << parameters.file >>
+
 workflows:
   my-workflow:
     jobs:
-      - my-job
-
-
+      - cat-file:
+          file: test.txt
