@@ -1,29 +1,19 @@
 version: 2.1
 
-executors:
-  node-docker: # declares a reusable executor
-    docker:
-      - image: cimg/node
-
 jobs:
-  test1:
+  sayhello: # defines a parameterized job
+    description: A job that does very little other than demonstrate what a parameterized job looks like
     parameters:
-      lane:
-        description: "LANE"
-        default: "test"
+      saywhat:
+        description: "To whom shall we say hello?"
+        default: "World"
         type: string
-    executor:
-      name: node-docker
-      version: <<parameters.lane>>
+    machine: true
     steps:
-      - checkout
-      - run: echo <<parameters.lane>>
-      
+      - run: echo "Hello << parameters.saywhat >>"
+
 workflows:
-  matrix-tests:
+  build:
     jobs:
-      - test1
-#           matrix:
-#             parameters:
-#               lane:
-#                 - test
+      - sayhello: # invokes the parameterized job
+          saywhat: Everyone
