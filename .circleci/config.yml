@@ -1,5 +1,4 @@
 version: 2.1
-
 commands:
   print:
     parameters:
@@ -13,7 +12,8 @@ jobs:
     parameters:
       file:
         type: string
-    steps:
+    steps: |
+    
       - print:
           message: Printing << parameters.file >>
       - run: cat << parameters.file >>
